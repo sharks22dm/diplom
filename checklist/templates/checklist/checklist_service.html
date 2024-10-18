@@ -1,0 +1,22 @@
+{% extends "main/base.html" %}
+
+{% block title %} Чек-листы Сервис {% endblock %}
+
+{% block content %}
+<h5>Чек-листы Сервис</h5>
+<a href="{% url 'service_to_mall' %}">
+    <button class="btn btn-primary">Создать шаблон</button>
+</a>
+<a href="{% url 'service_to_plazma' %}">
+    <button class="btn btn-primary">Плазма</button>
+</a>
+<a href="{% url 'service_to_nagornoe' %}">
+    <button class="btn btn-primary">Нагорное</button>
+</a>
+<a href="{% url 'service_to_service' %}">
+    <button class="btn btn-warning">Проверка витрин</button>
+</a>
+<a href="{% url 'check_sale_service' %}">
+    <button class="btn btn-danger">Проверка продаж</button>
+</a>
+{% endblock %}

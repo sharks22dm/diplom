@@ -1,0 +1,62 @@
+{% extends "main/base.html" %}
+
+{% block title %} Создать перемещение товара {% endblock %}
+
+{% block content %}
+<div class="card bg-dark text-light border-0">
+    <form method="post" id="checklist-form">
+        {% csrf_token %}
+        <div class="col-md-6 offset-md-3 col-12" style="padding: 10px;">
+            <div style="display: flex; justify-content: space-between;">
+                <div style="width: 30%;">
+                    {{ checklist_form.title }}
+                </div>
+                <div style="width: 30%;">
+                    {{ checklist_form.date }}
+                </div>
+                <div style="width: 30%;">
+                    {{ checklist_form.dep }}
+                </div>
+            </div>
+
+
+            {% for form in task_formset.forms %}
+            <div class="task-form" style="display: {% if forloop.first %}block{% else %}none{% endif %};">
+                <div style="display: flex; justify-content: space-between;">
+                    <div style="width: 20%;">
+                        {{ form.assigned_to }}
+                    </div>
+                    <div style="width: 75%;">
+                        {{ form.description }}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            <div>
+                <button type="submit" class="btn btn-success" style="width: 100%;">Создать</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const taskForms = document.querySelectorAll('.task-form');
+        taskForms.forEach((form, index) => {
+            const descriptionField = form.querySelector('input[name*="description"]');
+            descriptionField.addEventListener('input', function() {
+                if (descriptionField.value.length > 0 && descriptionField === document.activeElement) {
+                    if (index < taskForms.length - 1) {
+                        taskForms[index + 1].style.display = 'block';
+                    }
+                } else {
+                    for (let i = index + 1; i < taskForms.length; i++) {
+                        taskForms[i].style.display = 'none';
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+{% endblock %}
